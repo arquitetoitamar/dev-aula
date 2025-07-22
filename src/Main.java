@@ -19,7 +19,7 @@ public class Main {
     static class HelloHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            String response = "{\"message\": \"Olá, DevSecOps !!!\"}";
+            String response = "{\"message\": \"Olá, DevSecOps !\"}";
             t.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
             t.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = t.getResponseBody();
