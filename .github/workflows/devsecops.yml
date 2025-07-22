@@ -31,7 +31,7 @@ jobs:
 
       # 3. Build. Criar imagem docker
       - name: Build the Docker image
-        run: docker build -t devsecops-app .
+        run: docker build -t java-api-devsecops .
 
       # 4. Test SAST com semgrep
       - name: SAST com semgrep
@@ -44,7 +44,7 @@ jobs:
       - name: Scan dependencias com Trivy
         uses: aquasecurity/trivy-action@master
         with: 
-          image-ref: java-api-devsecops
+          image-ref: devsecops-app
 
       # 6. Release: Workflow automatizado
       - name: Release (simulado)
