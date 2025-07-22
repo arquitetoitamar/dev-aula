@@ -1,0 +1,72 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # 1. plan
+      - uses: actions/checkout@v4
+
+      # 2. Code. Validar codigo java
+      - name: Checkar sintaxe java 
+        run: javac src/Main.java
+
+      # 3. Build. Criar imagem docker
+      - name: Build the Docker image
+        run: docker build -t devsecops-app .
+
+      # 4. Test SAST com semgrep
+      - name: SAST com semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'auto'
+          paths: src/
+
+      # 5. Test Scan de dependencias com Trivy (imagem docker )
+      - name: Scan dependencias com Trivy
+        uses: aquasecurity/trivy-action@master
+        with: 
+          image-ref: java-api-devsecops
+
+      # 6. Release: Workflow automatizado
+      - name: Release (simulado)
+        run: echo "Release automatizado via GitHub Actions"
+      
+        # 7. Deploy: Simular deploy local
+      - name: Deploy (simulado)
+        run: echo "Simulando deploy local com Docker run"
+
+      # 8. Operate: Coletar logs
+      - name: Operate (logs)
+        run: echo "Logs da aplicação e do pipeline"
+
+      # 9. Monitor: Simulação de DAST e alerta
+      - name: Monitor (simulação DAST)
+        run: |
+          echo "Simulando DAST com OWASP ZAP (apenas exemplo, não roda de fato)"
+          echo "Se houvesse falha, apareceria aqui" 
+        
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
