@@ -45,6 +45,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with: 
           image-ref: devsecops-app
+          exit-code: '1'
+          severity: 'CRITICAL'
 
       # 6. Release: Workflow automatizado
       - name: Release (simulado)
