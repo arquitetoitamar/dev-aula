@@ -31,7 +31,7 @@ jobs:
 
       # 3. Build. Criar imagem docker
       - name: Build the Docker image
-        run: docker build -t java-api-devsecops .
+        run: docker build -t devsecops-app .
 
       # 4. Test SAST com semgrep
       - name: SAST com semgrep
